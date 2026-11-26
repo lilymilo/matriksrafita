@@ -1,0 +1,61 @@
+/* ==========================================================================
+   IdeaQuest 2.0 — Design Tokens
+   Swiss-Editorial Creative-Tech Strategy Studio
+   ========================================================================== */
+
+:root {
+  /* Typography */
+  --font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+
+  /* Neutral Architectural Base */
+  --bg-page: #f5f6f8;
+  --bg-surface: #ffffff;
+  --bg-subtle: #eff1f5;
+  --bg-stage: #edf0f5;
+
+  /* Hairlines & Borders */
+  --border-subtle: #e4e7ee;
+  --border-default: #d6dbe5;
+  --border-strong: #b4bccb;
+
+  /* Ink Hierarchy */
+  --ink-primary: #151923;
+  --ink-secondary: #586274;
+  --ink-muted: #7b8496;
+
+  /* Single Primary Accent — Electric Cobalt */
+  --accent: #2546f5;
+  --accent-hover: #1b38d8;
+  --accent-soft: rgba(37, 70, 245, 0.08);
+  --accent-border: rgba(37, 70, 245, 0.28);
+
+  /* Controlled Semantic Quadrant Accents */
+  --q-mint: #0f8a5f;
+  --q-mint-soft: rgba(15, 138, 95, 0.07);
+  --q-mint-border: rgba(15, 138, 95, 0.26);
+
+  --q-blue: #2563eb;
+  --q-blue-soft: rgba(37, 99, 235, 0.065);
+  --q-blue-border: rgba(37, 99, 235, 0.24);
+
+  --q-peach: #c46e09;
+  --q-peach-soft: rgba(196, 110, 9, 0.07);
+  --q-peach-border: rgba(196, 110, 9, 0.26);
+
+  --q-coral: #c94558;
+  --q-coral-soft: rgba(201, 69, 88, 0.06);
+  --q-coral-border: rgba(201, 69, 88, 0.24);
+
+  /* Restrained Geometry & Elevation */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-subtle: 0 1px 2px rgba(21, 25, 35, 0.05);
+  --shadow-float: 0 12px 28px -6px rgba(21, 25, 35, 0.14), 0 2px 6px rgba(21, 25, 35, 0.06);
+
+  /* Layout */
+  --container-max: 1360px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}

@@ -1,0 +1,19 @@
+{
+  "name": "ideaquest-lkpd5",
+  "version": "1.0.0",
+  "description": "IdeaQuest — Interactive Feasibility vs Impact Matrix for LKPD 5 Ideation (USP)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "lint": "node scripts/lint.mjs",
+    "test": "node --test scripts/test.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "three": "^0.187.0"
+  }
+}
