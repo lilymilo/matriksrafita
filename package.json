@@ -1,19 +1,36 @@
 {
   "name": "ideaquest-lkpd5",
-  "version": "1.0.0",
-  "description": "IdeaQuest — Interactive Feasibility vs Impact Matrix for LKPD 5 Ideation (USP)",
+  "version": "3.0.0",
+  "description": "IdeaQuest 3.0 — Studio Matriks Kelayakan vs Dampak LKPD 5 berbasis Next.js App Router, TypeScript, dan Three.js",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node scripts/dev.mjs",
-    "lint": "node scripts/lint.mjs",
-    "test": "node --test scripts/test.mjs",
-    "build": "node scripts/build.mjs"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import ./tests/register-alias.mjs --test tests/ideaquest-v3.test.mts",
+    "legacy:dev": "node scripts/dev.mjs",
+    "legacy:test": "node --test scripts/test.mjs"
   },
   "engines": {
     "node": ">=20.0.0"
   },
   "dependencies": {
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.11",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.187.0",
+    "eslint": "^10.15.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.74.0"
   }
 }
