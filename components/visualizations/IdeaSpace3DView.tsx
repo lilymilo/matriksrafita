@@ -10,9 +10,9 @@ import { useWorkspaceSelector, workspaceActions } from '@/lib/store/useIdeaQuest
 import type { CameraPreset } from '@/types/idea';
 
 const PRESETS: ReadonlyArray<{ id: CameraPreset; label: string }> = [
-  { id: 'iso', label: 'Sudut Isometrik' },
-  { id: 'front', label: 'Tampak Depan' },
-  { id: 'top', label: 'Tampak Atas' },
+  { id: 'iso', label: 'Isometrik' },
+  { id: 'front', label: 'Depan' },
+  { id: 'top', label: 'Atas' },
 ];
 
 export default function IdeaSpace3DView() {
@@ -34,13 +34,24 @@ export default function IdeaSpace3DView() {
       return;
     }
 
+    const isSmallScreen = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const init = initialMountStateRef.current;
+    const startLowPerf = init.lowPerfMode || isSmallScreen || prefersReduced;
+
+    if (startLowPerf && !init.lowPerfMode) {
+      workspaceActions.setLowPerfMode(true);
+    }
+
     const ctrl = createThreeSpaceController({
       mountEl: hostRef.current,
       tooltipEl: tooltipRef.current,
       initialIdeas: init.ideas,
       initialSelectedId: init.selectedIdeaId,
-      lowPerfMode: init.lowPerfMode,
+      lowPerfMode: startLowPerf,
       onSelectIdea: (id) => workspaceActions.selectIdea(id, true),
     });
 
@@ -71,11 +82,11 @@ export default function IdeaSpace3DView() {
         <div>
           <h3 className="stage-panel__title">Ruang Ide 3D Interaktif</h3>
           <p className="stage-panel__subtitle">
-            Putar, perbesar, atau klik bola ide untuk membuka detailnya. Kedalaman depan-belakang hanya memisahkan ide yang skornya sama.
+            Geser untuk memutar atau ketuk bola ide untuk membuka detail. Jika terasa berat di HP, gunakan Peta 2×2.
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <div className="space3d-controls-row">
           {PRESETS.map((p) => (
             <button
               key={p.id}
@@ -92,7 +103,7 @@ export default function IdeaSpace3DView() {
             className={`btn btn--sm ${lowPerfMode ? 'btn--accent' : 'btn--outline'}`}
             onClick={() => workspaceActions.setLowPerfMode(!lowPerfMode)}
           >
-            {lowPerfMode ? 'Mode Ringan: Aktif' : 'Mode Ringan'}
+            {lowPerfMode ? 'Ringan: Aktif' : 'Mode Ringan'}
           </button>
 
           <button
@@ -100,7 +111,7 @@ export default function IdeaSpace3DView() {
             className="btn btn--outline btn--sm"
             onClick={() => workspaceActions.setActiveView('map2x2')}
           >
-            Kembali ke Peta 2×2
+            Pakai 2D
           </button>
         </div>
       </div>

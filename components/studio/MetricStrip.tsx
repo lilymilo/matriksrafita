@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { memo } from 'react';
 import { computeSummaryStats } from '@/lib/domain/matrix-math';
 import { useWorkspaceSelector } from '@/lib/store/useIdeaQuestStore';
 
-export function MetricStrip() {
+export const MetricStrip = memo(function MetricStrip() {
   const ideas = useWorkspaceSelector((s) => s.ideas);
   const hiddenCount = useWorkspaceSelector((s) => s.payload.hiddenLkpdIds.length);
   const stats = computeSummaryStats(ideas, hiddenCount);
@@ -52,4 +52,4 @@ export function MetricStrip() {
       </div>
     </section>
   );
-}
+});

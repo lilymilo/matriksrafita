@@ -93,14 +93,14 @@ export function Map2x2View({
           <h3 className="stage-panel__title">Peta Prioritas 2×2 (Kelayakan vs Dampak)</h3>
           <p className="stage-panel__subtitle">
             {readOnly
-              ? 'Klik salah satu pin untuk melihat rincian ide.'
-              : 'Klik pin untuk membaca detail ide, atau seret pin ke kuadran lain untuk mencoba simulasi skor.'}
+              ? 'Ketuk pin ide untuk melihat rinciannya.'
+              : 'Ketuk pin untuk membuka detail & skor, atau seret pin pada layar desktop untuk simulasi.'}
           </p>
         </div>
       </div>
 
       <div className="matrix2d-wrap">
-        <div className="matrix2d-axis-top">Dampak Tinggi (Skor 4–5)</div>
+        <div className="matrix2d-axis-top">↑ Dampak Tinggi (Skor 4–5)</div>
 
         <div className="matrix2d-core">
           <div className="matrix2d-y-label" aria-hidden="true">
@@ -235,8 +235,40 @@ export function Map2x2View({
 
         <div className="matrix2d-axis-bottom">
           <span>Kelayakan Rendah (1–3)</span>
-          <span>Skor Kelayakan (1 → 5)</span>
-          <span>Kelayakan Tinggi (4–5)</span>
+          <span className="matrix2d-axis-mid">Skor Kelayakan (1 → 5)</span>
+          <span>Kelayakan Tinggi (4–5) →</span>
+        </div>
+      </div>
+
+      {/* Mobile Tap-Friendly Pin Directory so full idea names & scores are readable on 360px phones */}
+      <div className="mobile-pin-directory" aria-label="Daftar cepat ide pada peta">
+        <div className="mobile-pin-directory__head">
+          <strong>Ketuk ide untuk lihat detail &amp; skor:</strong>
+        </div>
+        <div className="mobile-pin-directory__scroll">
+          {ideas.map((idea) => {
+            const q = getQuadrantMeta(idea.feasibility, idea.impact);
+            const isSelected = idea.id === selectedIdeaId;
+            return (
+              <button
+                key={idea.id}
+                type="button"
+                className={`mobile-pin-pill ${isSelected ? 'is-selected' : ''} ${
+                  idea.isOriginalFinalSelection ? 'is-trio-chip' : ''
+                }`}
+                onClick={() => handleSelect(idea.id)}
+              >
+                <span className={`q-dot q-dot--${q.colorKey}`} />
+                <span className="mono" style={{ fontWeight: 700 }}>
+                  {idea.isOriginalFinalSelection ? '★' : ''}#{idea.id}
+                </span>
+                <span>{idea.shortLabel}</span>
+                <span className="mobile-pin-pill__score mono">
+                  {idea.feasibility}/{idea.impact}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 

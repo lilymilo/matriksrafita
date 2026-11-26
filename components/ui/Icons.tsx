@@ -30,7 +30,8 @@ export type IconName =
   | 'list'
   | 'star'
   | 'fileText'
-  | 'panelRight';
+  | 'panelRight'
+  | 'more';
 
 interface IconProps {
   name: IconName;
@@ -288,6 +289,14 @@ export function Icon({ name, size = 16, className }: IconProps) {
         <svg {...common}>
           <rect x="3" y="3" width="18" height="18" rx="1.5" />
           <line x1="15" y1="3" x2="15" y2="21" />
+        </svg>
+      );
+    case 'more':
+      return (
+        <svg {...common}>
+          <circle cx="5" cy="12" r="1.5" fill="currentColor" />
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+          <circle cx="19" cy="12" r="1.5" fill="currentColor" />
         </svg>
       );
   }

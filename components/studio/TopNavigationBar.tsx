@@ -1,63 +1,61 @@
 'use client';
 
-import React from 'react';
+import React, { memo } from 'react';
 import { LKPD_META } from '@/lib/data/lkpd-data';
 import { computeSummaryStats } from '@/lib/domain/matrix-math';
 import { useWorkspaceSelector, workspaceActions } from '@/lib/store/useIdeaQuestStore';
 import { Icon } from '@/components/ui/Icons';
 
-export function TopNavigationBar() {
-  const ideas = useWorkspaceSelector((s) => s.ideas);
+/**
+ * Isolated tiny subscription so tapping an idea never re-renders the Topbar or Hero.
+ */
+function TopbarDetailButton() {
   const selectedIdeaId = useWorkspaceSelector((s) => s.selectedIdeaId);
+  return (
+    <button
+      type="button"
+      className="btn btn--outline btn--sm topbar-desktop-only"
+      onClick={() => workspaceActions.openInspector(selectedIdeaId)}
+    >
+      <Icon name="panelRight" size={16} />
+      <span>Detail Ide #{selectedIdeaId}</span>
+    </button>
+  );
+}
+
+function TopbarSimStatus() {
+  const ideas = useWorkspaceSelector((s) => s.ideas);
   const hiddenCount = useWorkspaceSelector((s) => s.payload.hiddenLkpdIds.length);
-
   const stats = computeSummaryStats(ideas, hiddenCount);
-  const activeIdea = ideas.find((i) => i.id === selectedIdeaId) ?? ideas[0];
 
+  if (!stats.hasSimulatedChanges) return null;
+  return <span className="status-rule">Simulasi aktif</span>;
+}
+
+export const TopNavigationBar = memo(function TopNavigationBar() {
   return (
     <>
       <header className="topbar">
         <div className="workspace-container topbar__inner">
           <div className="topbar__left">
-            <button
-              type="button"
-              className="btn btn--outline btn--sm mobile-menu-trigger"
-              onClick={() => workspaceActions.setMobileNavOpen(true)}
-              aria-label="Buka menu navigasi"
-            >
-              <Icon name="menu" size={18} />
-              <span>Menu</span>
-            </button>
+            <a href="#ringkasan" className="topbar__mobile-brand-link" aria-label="Beranda IdeaQuest">
+              <span className="brand-mark-box" aria-hidden="true" />
+              <strong>{LKPD_META.brand}</strong>
+            </a>
 
-            <span className="topbar__context">
-              <strong className="topbar__mobile-brand">{LKPD_META.brand}</strong>
-              <span className="topbar__doc-title">
-                LKPD 5 · Penilaian Prioritas Ide
-              </span>
+            <span className="topbar__doc-title">
+              LKPD 5 · Penilaian Prioritas Ide
             </span>
 
-            {stats.hasSimulatedChanges && (
-              <span className="status-rule">
-                Perubahan simulasi aktif
-              </span>
-            )}
+            <TopbarSimStatus />
           </div>
 
           <div className="topbar__actions">
-            {activeIdea && (
-              <button
-                type="button"
-                className="btn btn--outline btn--sm"
-                onClick={() => workspaceActions.openInspector(activeIdea.id)}
-              >
-                <Icon name="panelRight" size={16} />
-                <span>Detail Ide #{activeIdea.id}</span>
-              </button>
-            )}
+            <TopbarDetailButton />
 
             <button
               type="button"
-              className="btn btn--outline btn--sm"
+              className="btn btn--outline btn--sm topbar-desktop-only"
               onClick={() => workspaceActions.openCreateModal()}
             >
               <Icon name="plus" size={16} />
@@ -86,6 +84,13 @@ export function TopNavigationBar() {
             </h1>
 
             <p className="hero-lead">{LKPD_META.heroLead}</p>
+
+            <div className="hero-cta-stack hero-cta-stack--mobile">
+              <a href="#matriks-prioritas" className="btn btn--primary btn--lg">
+                <span>Buka Matriks Prioritas</span>
+                <Icon name="arrowDownRight" size={17} />
+              </a>
+            </div>
           </div>
 
           <div className="hero-editorial__aside">
@@ -120,4 +125,4 @@ export function TopNavigationBar() {
       </section>
     </>
   );
-}
+});

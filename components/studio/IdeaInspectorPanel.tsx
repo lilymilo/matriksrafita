@@ -21,13 +21,18 @@ export function IdeaInspectorPanel() {
 
   useEffect(() => {
     if (!inspectorOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         workspaceActions.closeInspector();
       }
     };
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
   }, [inspectorOpen]);
 
   if (!inspectorOpen) return null;
@@ -93,6 +98,7 @@ export function IdeaInspectorPanel() {
       }}
     >
       <aside className="drawer-panel" aria-label="Panel Detail Ide">
+        <div className="sheet-handle-bar" aria-hidden="true" />
         <div className="drawer-panel__head">
           <div>
             <div className="drawer-panel__meta">

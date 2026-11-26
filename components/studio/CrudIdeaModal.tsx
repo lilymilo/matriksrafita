@@ -54,13 +54,18 @@ export function CrudIdeaModal() {
 
   useEffect(() => {
     if (!crudModal.open) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         workspaceActions.closeCrudModal();
       }
     };
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
   }, [crudModal.open]);
 
   if (!crudModal.open) return null;
@@ -94,6 +99,7 @@ export function CrudIdeaModal() {
       }}
     >
       <aside className="drawer-panel drawer-panel--form">
+        <div className="sheet-handle-bar" aria-hidden="true" />
         <div className="drawer-panel__head">
           <div>
             <div className="drawer-panel__meta">

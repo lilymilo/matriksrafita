@@ -24,7 +24,7 @@ export function DeleteConfirmDialog() {
 
   return (
     <div
-      className="modal-backdrop"
+      className="modal-backdrop modal-backdrop--bottom-mobile"
       role="alertdialog"
       aria-modal="true"
       aria-labelledby="delete-dialog-title"
@@ -33,6 +33,7 @@ export function DeleteConfirmDialog() {
       }}
     >
       <div className="modal-sheet modal-sheet--sm">
+        <div className="sheet-handle-bar" aria-hidden="true" />
         <div className="modal-sheet__head">
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <Icon name={isLkpdSeed ? 'shield' : 'alert'} size={20} />
